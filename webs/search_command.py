@@ -17,7 +17,7 @@ class Code:
         url = "https://www.dictionary.com/browse/" + search_term
         response = requests.get(url)
         soup = bs4.BeautifulSoup(response.content, "html.parser")
-        content = soup.find("div", attrs = {"data-type": "word-definitions"})
+        content = soup.find("section", attrs = {"data-type": "part-of-speech-module"})
 
         if content is None:
 
@@ -25,13 +25,5 @@ class Code:
         
         else:
 
-            content = content.text.replace(".", ". \n").replace("See more", "")
-            grammar_classes = ["noun", "adjective", "adverb"]
-
-            for x in grammar_classes:
-                lenght_of_word = len(grammar_classes[grammar_classes.index(x)])
-
-                if x == content[:lenght_of_word]:
-                    content = content[lenght_of_word:]
-                    
+            content = content.text.replace(".", ". \n")
             click.echo(content)
